@@ -9,5 +9,8 @@ public class ConfirmedEmployee extends Employee{
 		System.out.println("Confirmed Employees' Salaries");
 		
 	}
+	public void transportFacility() {
+		System.out.println("transportation");
+	}
 
 }
