@@ -2,12 +2,69 @@
 
 <beans xmlns = "http://www.springframework.org/schema/beans"
    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context = "http://www.springframework.org/schema/context"
    xsi:schemaLocation = "http://www.springframework.org/schema/beans
-   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd"  >
    
-   <bean id="pointBean" class="com.deloitte.pojo.Point"> 
+   <context:annotation-config /> <!-- schema for these are added.3rd and last 2 lines in schema -->
+   <!-- annotation indicator for ioc container -->
+   <bean id="pointBean" class="com.deloitte.pojo.Point" scope = "prototype"> 
    <property name = "x" value = "4"/>
    <property name = "y" value = "8"/>
    </bean>
+   
+    <bean id="helloWorld" class="com.deloitte.pojo.HelloWorld" > 
+   <property name = "message1" value = "Hello World"/>
+   <property name = "message2" value = "Hello Second World"/>
+   </bean>
+   
+    <bean id="helloIndia" class="com.deloitte.pojo.HelloIndia" parent = "helloWorld"> 
+   <property name = "message1" value = "Hello India"/>
+   <property name = "message3" value = "Namaste India"/>
+   </bean>
+   
+    <!--ctor based DI -->
+   <!-- Definition for TextEditor bean -->
+   <bean id = "textEditor" class = "com.deloitte.pojo.TextEditor" >
+   <constructor-arg ref = "spellChecker" />
+    <property name = "name" value = "Deloitte Text editor" />
+   </bean>  
+    
+   
+   <!--setter based DI -->
+   <!-- Definition for TextEditor bean -->
+   <bean id = "textEditorSDI" class = "com.deloitte.pojo.TextEditor" >
+   <property name = "spellChecker" ref = "spellChecker" />
+    <property name = "name" value = "Deloitte Text editor" />
+   </bean>
+   
+   <!-- autowire -->
+   <!-- Definition for TextEditor bean -->
+   <bean id = "textEditorAWbN" class = "com.deloitte.pojo.TextEditor" autowire = "byName" >
+    <property name = "name" value = "Deloitte Text editor" /> 
+   </bean> 
+   
+   <!-- autowire -->
+   <!-- Definition for TextEditor bean -->
+   <bean id = "textEditorAWbT" class = "com.deloitte.pojo.TextEditor" autowire = "byType" >
+   <property name = "name" value = "Deloitte Text editor" />
+   </bean> 
+   
+   <!-- autowire -->
+   <!-- Definition for TextEditor bean -->
+   <bean id = "textEditorAWbC" class = "com.deloitte.pojo.TextEditor" autowire = "constructor" >
+   <property name = "name" value = "Deloitte Text editor" />
+   
+   </bean>
+   
+   <!--  both textEditor beans will call the textEditor class. so the message of TextEditor ctor will be displayed twice. -->
+   
+   <!-- Definition for SpellChecker bean -->
+   <!-- bean for SpellChecker is same for CDI and SDI -->
+   <bean id = "spellChecker" class = "com.deloitte.pojo.SpellChecker" >
+   </bean>
+   
    
    </beans>
